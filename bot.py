@@ -16,6 +16,10 @@ bot.
 """
 
 import logging
+import os  # Import os module
+from dotenv import load_dotenv  # Import load_dotenv function
+
+load_dotenv()  # Load the environment variables
 
 from telegram import __version__ as TG_VER
 
@@ -64,7 +68,9 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 def main() -> None:
     """Start the bot."""
     # Create the Application and pass it your bot's token.
-    application = Application.builder().token("6076849123:AAGRCVIoB3bRlNPqhH8u9OGZKR-m8jzgvTs").build()
+    # Fetch the token from environment variables
+    token = os.getenv('TELEGRAM_TOKEN')
+    application = Application.builder().token(token).build()
 
     # on different commands - answer in Telegram
     application.add_handler(CommandHandler("start", start))
